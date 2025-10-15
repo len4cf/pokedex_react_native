@@ -1,0 +1,38 @@
+import { useMemo } from "react";
+import { Button, FlatList, Text, View } from "react-native";
+import { useFavorites } from "../context/FavoritesContext";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { RootStackParamList } from "../types";
+import { PokemonCard } from "../components/PokemonCard";
+
+
+export default function FavoritesScreen({ navigation }: NativeStackScreenProps<RootStackParamList, "Favorites">) {
+const { favorites } = useFavorites();
+const favoriteIds = useMemo(() => Object.keys(favorites).filter((id) => favorites[Number(id)]).map(Number), [favorites]);
+
+
+if (favoriteIds.length === 0) {
+return (
+<View style={{ flex: 1, alignItems: "center", justifyContent: "center", gap: 12 }}>
+    <Text>Nenhum favorito ainda.</Text>
+    <Button title="Voltar para a Pokédex" onPress={() => navigation.navigate("Home")} />
+</View>
+);
+}
+
+
+const data = favoriteIds.map((id) => ({ id, name: `#${id}`, image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png` }));
+
+
+return (
+    <FlatList
+    data={data}
+    keyExtractor={(item) => String(item.id)}
+    numColumns={2}
+    contentContainerStyle={{ padding: 8 }}
+    renderItem={({ item }) => (
+    <PokemonCard item={{ id: item.id, name: item.name, image: item.image }} onPress={() => navigation.navigate("Details", { idOrName: String(item.id) })} />
+    )}
+    />
+);
+}
