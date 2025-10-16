@@ -7,12 +7,13 @@ import { View, StyleSheet } from "react-native";
 
 export default function App() {
 return (
+  // wrap in gesture handler and favorites provider
   <GestureHandlerRootView style={{ flex: 1 }}>
     <FavoritesProvider>
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <RootNavigator />
-    </View>
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <RootNavigator />
+      </View>
     </FavoritesProvider>
   </GestureHandlerRootView>
 );

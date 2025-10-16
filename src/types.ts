@@ -1,3 +1,5 @@
+// types used in the app
+
 export type RootStackParamList = {
     Home: undefined;
     Details: { idOrName: string };

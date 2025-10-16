@@ -8,11 +8,20 @@ import { RootStackParamList } from "../types";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-
+// main navigator
 export function RootNavigator() {
 return (
 <NavigationContainer>
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: "#31326F" }, 
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+        color: "#fff"
+  },
+
+    }}
+>
     <Stack.Screen name="Home" component={HomeScreen} options={{ title: "Pokédex" }} />
     <Stack.Screen name="Details" component={DetailsScreen} options={{ title: "Detalhes" }} />
     <Stack.Screen name="Favorites" component={FavoritesScreen} options={{ title: "Favoritos" }} />

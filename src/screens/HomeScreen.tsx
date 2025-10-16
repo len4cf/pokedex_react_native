@@ -29,6 +29,7 @@ export default function HomeScreen({
   const { favorites } = useFavorites();
   const hasFavs = Object.values(favorites).some(Boolean);
 
+  // loads a page of pokemons
   const loadPage = useCallback(async () => {
     try {
       setLoading(true);
@@ -49,20 +50,24 @@ export default function HomeScreen({
     }
   }, [offset]);
 
+  // initial load and on offset change
   useEffect(() => {
     loadPage();
   }, [loadPage]);
 
+  // loads more items 
   const onLoadMore = () => {
     if (!loading) setOffset((prev) => prev + 20);
   };
 
+  // handles search action and navigates to details
   const onSearch = () => {
     const trimmed = query.trim();
     if (!trimmed) return Alert.alert("Busca", "Digite um nome ou número");
     navigation.navigate("Details", { idOrName: trimmed });
   };
 
+  // adds favorites button to header
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -80,14 +85,14 @@ export default function HomeScreen({
           <Ionicons
             name={hasFavs ? "heart" : "heart-outline"}
             size={26}
-            color={hasFavs ? "#e63946" : "#666"}
+            color={hasFavs ? "#8b0000" : "#fff"}
           />
         </TouchableOpacity>
       ),
     });
   }, [navigation, hasFavs]);
 
-
+  // main render
   return (
     <View style={styles.container}>
       <View style={styles.searchRow}>
@@ -140,9 +145,10 @@ export default function HomeScreen({
   );
 }
 
+// styles
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  searchRow: { flexDirection: "row", gap: 8, padding: 12, alignItems: "center" },
+  container: { flex: 1, backgroundColor: "#CBDCEB" },
+  searchRow: { flexDirection: "row", gap: 8, padding: 12, alignItems: "center", backgroundColor: "#fff" },
   input: {
     flex: 1,
     borderWidth: 1,

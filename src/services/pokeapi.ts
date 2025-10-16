@@ -1,8 +1,10 @@
 import axios from "axios";
 import { PokemonDetails, PokemonListItem } from "../types";
 
+// create axios instance
 const api = axios.create({ baseURL: "https://pokeapi.co/api/v2" });
 
+// fetch a page of pokemons
 export async function fetchPokemonPage(offset = 0, limit = 20): Promise<PokemonListItem[]> {
     const { data } = await api.get(`/pokemon?offset=${offset}&limit=${limit}`);
     return data.results.map((p: { name: string; url: string }) => {
@@ -12,6 +14,7 @@ export async function fetchPokemonPage(offset = 0, limit = 20): Promise<PokemonL
 });
 }
 
+// fetch detailed info about a pokemon
 export async function fetchPokemonDetails(idOrName: string): Promise<PokemonDetails> {
     const { data } = await api.get(`/pokemon/${idOrName.toLowerCase()}`);
     return data as PokemonDetails;
